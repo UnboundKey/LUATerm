@@ -164,7 +164,7 @@ print(programinfo.name .. "\nVersion: " .. programinfo.version .. "\nCreated By 
 end,
 
 changelog = function() 
-  local _file = io.open("change.log")
+  local _file = io.open("README.md")
   _log = _file:read("*all")
 
    print("<---------------------------------------------------------------------------->")
