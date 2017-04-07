@@ -1,6 +1,13 @@
 # Terminal7
 A fake terminal written in Lua
 
+### version 0.1.1 Alpha (7/4/2017) ###
+
+- improved login system
+  - login command now has an optional parameter. login [username]
+
+- General interface improved
+
 ### version 0.1 Alpha (1/4/2017) ###
 
 - Improved user creation system

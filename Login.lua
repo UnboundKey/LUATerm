@@ -4,6 +4,20 @@ userinfo = io.open("Users.json", "r+")
 Users = json.decode(userinfo:read("*a"))
 userinfo:close()
 
+os.execute("clear")
+
+function os.capture(cmd, raw)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
+
+
 programinfo = {
 	name = "TERMINAL7",
 	version = "0.1.1 Alpha",
@@ -30,48 +44,55 @@ function checkPriv(privlevel)
 end
 end
 
+function printDivider()
+	print("<" .. string.rep("=",tonumber(os.capture("tput cols", false) - 2)) .. ">")
+end
+
 commands = {
 
 commands = function()
 			print("\nCommands")
-			print("<============================================================================>")
+			printDivider()
 
 			for k, v in pairs(commands) do
 				print(k)
 			end
 		end,
-		
+
 users = function()
 			print("\nUsers")
-			print("<============================================================================>")
+			printDivider()
 
 			for k, v in pairs(Users) do
 				print(k)
 			end
 		end,
 
-	login = function()
+	login = function(username)
 		if currentUser == nil then
-			::Logon::
-		print("Enter Name")
-		local _username = io.read()
+			 if username then
+				 _username = username
+			 else
+				 print("enter name")
+				 _username = io.read()
+			 end
 		if Users[_username] ~= nil then
 			print("enter Password")
 			local _password = io.read()
 			if Users[_username].password == _password then
 				user = _username
-				print("<---------------------------------------------------------------------------->")
+				printDivider()
 				print("You logged in as " .. _username)
-				print("<---------------------------------------------------------------------------->")
+				printDivider()
 				currentUser = _username
 			else
-				print("<---------------------------------------------------------------------------->")
+				printDivider()
 				print("Password Incorrect")
-				print("<---------------------------------------------------------------------------->")
+				printDivider()
 			end
 		else
-			print("Usename Incorrect")
-			goto Logon
+			print("enter Password")
+			io.read()
 		end
 		else print("You are already logged in.")
 		end
@@ -81,17 +102,17 @@ users = function()
 		::CreateUserBegin::
 		if checkPriv(1) then
 		print("New Users Name")
-		print("<============================================================================>")
+		printDivider()
 
 		local _username = io.read()
 		if Users[_username] == nil then
 			print("New Users Password")
-			print("<============================================================================>")
+			printDivider()
 
 			local _password = io.read()
 			::typeSelection::
 			print("What type of account are you creating")
-			print("<============================================================================>")
+			printDivider()
 			print("Normal" .. "\nAdmin")
 
 			local _type = io.read()
@@ -104,7 +125,7 @@ users = function()
 				acounttype = _type
 			}
 			saveUserData()
-			print("<============================================================================>")
+			printDivider()
 			print("User ".._username.." Sucessfully created.")
 		else
 				print("User already exists")
@@ -117,7 +138,7 @@ users = function()
 
 	deleteuser = function()
 		if checkPriv(1) then
-		print("<---------------------------------------------------------------------------->")
+		printDivider()
 		print("User to delete: ")
 		local _username = io.read()
 		if Users[_username] ~= nil then
@@ -152,9 +173,9 @@ end,
  logout = function()
 	 if currentUser ~= nil then
 	 currentUser = nil
-	 print("<---------------------------------------------------------------------------->")
+	 printDivider()
 	 print("Succesfully Logged Out")
-	 print("<---------------------------------------------------------------------------->")
+	 printDivider()
 	end
  end,
 
@@ -167,17 +188,24 @@ changelog = function()
 	local _file = io.open("README.md")
 	_log = _file:read("*all")
 
-	 print("<---------------------------------------------------------------------------->")
+	 printDivider()
 	 print(_log)
-	 print("<---------------------------------------------------------------------------->")
+	 printDivider()
+end,
+
+clear = function()
+	os.execute("clear")
+	print("Welcome to " .. programinfo.name .. " (Created By: ".. programinfo.creator .. ")")
 end
 }
 
 print("Welcome to " .. programinfo.name .. " (Created By: ".. programinfo.creator .. ")")
 ::readCMD::
-input = string.lower(io.read())
-if commands[input] ~= nil then
-	commands[input]()
+local jas = io.read()
+cmd, input = string.match(string.lower(jas), "(%S+) (.*)")
+cmd = cmd or jas
+if commands[cmd] ~= nil then
+	commands[cmd](input)
 else
 	print("Command does not exist")
 end
