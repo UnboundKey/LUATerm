@@ -5,8 +5,8 @@ Users = json.decode(userinfo:read("*a"))
 userinfo:close()
 
 programinfo = {
-  name = "INDIE TERMINAL",
-  version = "0.05 alpha",
+  name = "TERMINAL7",
+  version = "0.1.1 Alpha",
   creator = "Benjamin Nordin"
 }
 
