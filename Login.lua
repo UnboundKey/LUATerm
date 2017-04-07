@@ -196,7 +196,8 @@ end,
 clear = function()
 	os.execute("clear")
 	print("Welcome to " .. programinfo.name .. " (Created By: ".. programinfo.creator .. ")")
-end
+end,
+
 }
 
 print("Welcome to " .. programinfo.name .. " (Created By: ".. programinfo.creator .. ")")
