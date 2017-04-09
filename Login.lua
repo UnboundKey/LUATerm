@@ -20,8 +20,8 @@ end
 
 programinfo = {
 	name = "TERMINAL7",
-	version = "0.1.1 Alpha",
-	creator = "Benjamin Nordin"
+	version = "1.0 Alpha",
+	creator = "Benjamin Nordin, Trevin Sorenson"
 }
 
 accounttypes = {
