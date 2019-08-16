@@ -1,4 +1,4 @@
-# Terminal7
+# LuaTerm
 A fake terminal written in Lua
 
 ### version 0.1.1 Alpha (7/4/2017) ###
